@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>Class 12 Study Hub</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">12</div><div><strong>Study Hub</strong><small>Class 12 • Personal planner</small></div></div>
+    <button class="icon-btn" id="notifyBtn" title="Enable browser notifications" aria-label="Enable notifications">🔔</button>
+  </header>
+
+  <main class="container">
+    <section class="welcome">
+      <div>
+        <p class="eyebrow" id="todayLabel">YOUR STUDY COMMAND CENTRE</p>
+        <h1>Make today count.</h1>
+        <p class="muted">Track chapters, focus on weaker subjects and build a realistic daily plan.</p>
+      </div>
+      <div class="hours-pill"><span>DAILY SELF-STUDY TARGET</span><strong><span id="hoursLabel">5</span> hrs</strong></div>
+    </section>
+
+    <nav class="tabs" aria-label="Main navigation">
+      <button class="tab active" data-view="dashboard">Overview</button>
+      <button class="tab" data-view="subjects">Subjects</button>
+      <button class="tab" data-view="planner">Day planner</button>
+      <button class="tab" data-view="reminders">Reminders</button>
+    </nav>
+
+    <section id="dashboard" class="view active">
+      <div class="section-heading"><div><p class="eyebrow">YOUR PROGRESS</p><h2>Syllabus overview</h2></div><span class="tag" id="overallTag">Getting started</span></div>
+      <div class="overall-card">
+        <div class="overall-number"><strong id="overallPct">0%</strong><span>completed</span></div>
+        <div class="progress-track big"><div id="overallBar" class="progress-fill"></div></div>
+        <p class="muted tiny" id="chapterCount">0 of 0 chapters completed</p>
+      </div>
+      <div class="section-heading compact"><div><p class="eyebrow">SUBJECT BREAKDOWN</p><h2>Where you stand</h2></div><button class="text-btn" data-go="subjects">Edit chapters →</button></div>
+      <div id="subjectOverview" class="subject-grid"></div>
+      <div class="insight-card">
+        <div class="insight-icon">🎯</div><div><p class="eyebrow">SMART PRIORITY</p><h3 id="priorityTitle">Your focus will appear here</h3><p id="priorityText" class="muted">Mark your chapter status to get a subject-priority recommendation.</p></div>
+      </div>
+      <div class="section-heading compact"><div><p class="eyebrow">NEXT ACTION</p><h2>Pick up where you left off</h2></div></div>
+      <div id="nextActions" class="next-actions"></div>
+    </section>
+
+    <section id="subjects" class="view">
+      <div class="section-heading"><div><p class="eyebrow">CHAPTER TRACKER</p><h2>All subjects</h2></div><button class="primary small" id="addSubjectBtn">＋ Subject</button></div>
+      <p class="muted">Choose a chapter status. Percentages update automatically. Chapter lists are editable starter lists—check them against your current CBSE syllabus.</p>
+      <div id="subjectPanels" class="subject-panels"></div>
+    </section>
+
+    <section id="planner" class="view">
+      <div class="section-heading"><div><p class="eyebrow">ADAPTIVE DAILY PLAN</p><h2>Your study missions</h2></div><span class="tag" id="planDate"></span></div>
+      <div class="settings-row">
+        <label>Daily study target
+          <select id="dailyHours">
+            <option value="3">3 hours</option><option value="4">4 hours</option><option value="5" selected>5 hours</option><option value="6">6 hours</option><option value="7">7 hours</option><option value="8">8 hours</option>
+          </select>
+        </label>
+        <button class="secondary" id="regenerateBtn">↻ Rebuild today's plan</button>
+      </div>
+      <div class="note">Because your school and coaching timings vary, this planner uses <strong>durations rather than fixed clock times</strong>. Fit the sessions around your actual commitments.</div>
+      <div id="dailyPlan" class="plan-list"></div>
+      <div class="plan-footer"><span id="planTotal">Total: 5 hours</span><span id="planDone">0 / 6 missions done</span></div>
+      <div class="section-heading compact"><div><p class="eyebrow">WEEKLY CHECK-IN</p><h2>Adjust your strategy</h2></div></div>
+      <div class="weekly-card"><p id="weeklyAdvice">Your weekly advice will update as you complete tasks.</p><button class="secondary" id="weeklyBtn">Review subject priorities</button></div>
+    </section>
+
+    <section id="reminders" class="view">
+      <div class="section-heading"><div><p class="eyebrow">STAY CONSISTENT</p><h2>Reminders & settings</h2></div></div>
+      <div class="settings-card">
+        <h3>Daily study reminder</h3>
+        <p class="muted">Choose a time to see a reminder when this planner is open in your browser.</p>
+        <div class="settings-row">
+          <label>Reminder time <input type="time" id="reminderTime" value="18:00"></label>
+          <button class="primary" id="saveReminder">Save reminder</button>
+        </div>
+        <p id="reminderStatus" class="tiny muted">Browser notifications are optional.</p>
+      </div>
+      <div class="settings-card">
+        <h3>How the smart priority works</h3>
+        <ul class="plain-list">
+          <li>Subjects with lower syllabus completion receive more study time.</li>
+          <li>Chapters marked “In progress” remain on your upcoming task list.</li>
+          <li>Completed chapters are not counted as pending, but you can revise them manually.</li>
+          <li>Rebuild the daily plan after changing chapter statuses to recalculate time allocation.</li>
+        </ul>
+      </div>
+      <div class="settings-card">
+        <h3>Your data</h3>
+        <p class="muted">Your progress is saved in this browser on this device using local storage. It is not automatically synced to GitHub or another device.</p>
+        <div class="settings-row wrap"><button class="secondary" id="exportBtn">↓ Export backup</button><label class="file-label">↑ Import backup<input type="file" id="importFile" accept="application/json"></label><button class="danger" id="resetBtn">Reset all data</button></div>
+      </div>
+    </section>
+
+    <footer>Built for your board preparation • Keep showing up.</footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
